@@ -1,4 +1,5 @@
-const options = {};
+const options = defaultOpts,
+      title = document.title;
 
 // Initialize with the user's option settings
 chrome.storage.local.get('options', data => {
@@ -13,15 +14,16 @@ chrome.storage.onChanged.addListener(changes => {
 
 window.addEventListener("keydown", e => {
     if(parseInt(e.key) > 0) {
-        const video = document.querySelector("video");
         e.stopPropagation();
+        const video = document.querySelector("video"),
+              speed = options[e.key] ?? defaultOpts[e.key];
 
         try {
-            video.playbackRate = options[e.key];
+            video.playbackRate = speed;
         } catch (error) {
             console.error(error);
         }
         
-        console.log(`Video Speed: ${video.playbackRate}`);
+        document.title = `${speed}X ${title}`;
     }
 }, true);

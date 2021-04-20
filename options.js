@@ -1,5 +1,5 @@
 // In-page cache of the user's options
-const options = {};
+const options = defaultOpts;
 
 // Initialize with the user's option settings
 chrome.storage.local.get('options', data => {
@@ -11,8 +11,12 @@ chrome.storage.local.get('options', data => {
 
 container.querySelectorAll("input").forEach(input => {
     input.addEventListener("input", () => {
-        const name = input.name;
-        options[name.charAt(name.length - 1)] = input.value;
+        const name = input.name,
+              value = input.value;
+
+        if(value == null || value == "") return;
+        
+        options[name.charAt(name.length - 1)] = value;
         chrome.storage.local.set({options});
     });
 });

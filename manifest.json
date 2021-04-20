@@ -10,7 +10,7 @@
         "matches":[
           "https://www.youtube.com/*"
         ],
-        "js": ["content.js"]
+        "js": ["defaults.js", "content.js"]
       }
     ],
   "permissions": [
