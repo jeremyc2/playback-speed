@@ -18,7 +18,7 @@ chrome.storage.onChanged.addListener(changes => {
 });
 
 window.addEventListener("keydown", e => {
-    if(parseInt(e.key) > 0) {
+    if(parseFloat(e.key) > 0) {
         e.stopPropagation();
         const video = document.querySelector("video"),
               speed = options[e.key] ?? defaultOpts[e.key];
