@@ -1,3 +1,4 @@
+// TODO switch on and off controls
 const options = defaultOpts;
 
 var title;
