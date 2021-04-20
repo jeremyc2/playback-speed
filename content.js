@@ -1,8 +1,16 @@
+const options = {};
+
+chrome.storage.onChanged.addListener(changes => {
+    for ({ newValue: newOptions } of Object.values(changes)) {
+        Object.assign(options, newOptions);
+    }
+  });
+
 window.addEventListener("keydown", e => {
-        const speed = parseInt(e.key);
-        if(speed > 0) {
+        if(parseInt(e.key) > 0) {
             const video = document.querySelector("video");
-            video.playbackRate = speed;
             e.stopPropagation();
+            video.playbackRate = options[e.key];
+            alert(video.playbackRate);
         }
     }, true);
