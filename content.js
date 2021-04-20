@@ -1,5 +1,10 @@
-const options = defaultOpts,
-      title = document.title;
+const options = defaultOpts;
+
+var title;
+
+document.addEventListener("DOMContentLoaded", () => {
+    title = document.title;
+})
 
 // Initialize with the user's option settings
 chrome.storage.local.get('options', data => {
