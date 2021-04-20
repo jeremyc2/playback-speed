@@ -10,7 +10,13 @@ window.addEventListener("keydown", e => {
         if(parseInt(e.key) > 0) {
             const video = document.querySelector("video");
             e.stopPropagation();
-            video.playbackRate = options[e.key];
+
+            try {
+                video.playbackRate = options[e.key];
+            } catch (error) {
+                console.error(error);
+            }
+            
             alert(video.playbackRate);
         }
     }, true);
