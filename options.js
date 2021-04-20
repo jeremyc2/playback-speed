@@ -36,7 +36,6 @@ container.querySelectorAll("input").forEach(input => {
         }
         
         options[name.charAt(name.length - 1)] = value;
+        chrome.storage.local.set({options});
     });
 });
-
-chrome.storage.local.set({options});
