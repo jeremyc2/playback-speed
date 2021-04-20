@@ -1,8 +1,8 @@
 window.addEventListener("keydown", e => {
-        const number = parseInt(e.key);
-        if(number > 0) {
+        const speed = parseInt(e.key);
+        if(speed > 0) {
             const video = document.querySelector("video");
-            video.playbackRate = number;
+            video.playbackRate = speed;
             e.stopPropagation();
         }
     }, true);
