@@ -19,6 +19,16 @@ chrome.storage.onChanged.addListener(changes => {
 });
 
 window.addEventListener("keydown", e => {
+    const activeElement = document.activeElement,
+          activeTagName = activeElement.tagName;
+
+    if(activeTagName == "INPUT" ||
+        activeTagName == "TEXTAREA" ||
+        activeElement.isContentEditable) {
+        console.log("Focus is on input element.");
+        return;
+    }
+
     if(parseFloat(e.key) > 0) {
         e.stopPropagation();
         const video = document.querySelector("video"),
