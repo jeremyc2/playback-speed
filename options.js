@@ -27,7 +27,7 @@ container.querySelectorAll("input").forEach(input => {
 
         var value = parseFloat(input.value);
 
-        if(value == null || value == "") return;
+        if(value == null || value === "") return;
 
         if(value > 16) {
             alert("Values higher than 16 are not permitted");
