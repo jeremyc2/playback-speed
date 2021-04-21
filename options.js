@@ -30,8 +30,10 @@ container.querySelectorAll("input").forEach(input => {
         if(value == null || value == "") return;
 
         if(value > 16) {
+            alert("Values higher than 16 are not permitted");
             value = input.value = 16;
         } else if (value <= 0) {
+            alert("Values zero or less are not permitted");
             value = input.value = 1;
         }
         
