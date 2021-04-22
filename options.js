@@ -1,39 +1,38 @@
 // In-page cache of the user's options
-const options = { ...defaultOpts };
+var options = getDefaults();
 
-var skip = defaultSkip;
-
-function reset() {
-    container.querySelectorAll("input").forEach((input, i) => {
-        Object.assign(options, defaultOpts);
-        input.value = options[i + 1];
-    });
+function saveOptions() {
     chrome.storage.local.set({options});
+}
+
+function fillPageValues() {
+    speedForm.querySelectorAll("input").forEach((input, i) => {
+        input.value = options.speedPresets[i + 1];
+    });
+    skipForm.skipSeconds.value = options.skipPresets.seconds;
 }
 
 // Initialize with the user's option settings
 chrome.storage.local.get('options', data => {
-    Object.assign(options, data.options);
-    for (let [key, value] of Object.entries(options)) {
-        container[`speed${key}`].value = value;
-    }
-});
 
-chrome.storage.local.get('skipValue', data => {
-    skip = data;
+    if(data == null) return;
+
+    options = data.options;
+    fillPageValues();
 });
 
 resetButton.addEventListener("click", () => {
-    reset();
+    options = getDefaults();
+    fillPageValues();
 });
 
-container.querySelectorAll("input").forEach(input => {
+speedForm.querySelectorAll("input").forEach(input => {
     input.addEventListener("input", () => {
         const name = input.name;
 
         var value = parseFloat(input.value);
 
-        if(value == null || value === "") return;
+        if(value == null || value == NaN) return;
 
         if(value > 16) {
             alert("Values higher than 16 are not permitted");
@@ -43,12 +42,18 @@ container.querySelectorAll("input").forEach(input => {
             value = input.value = 1;
         }
         
-        options[name.charAt(name.length - 1)] = value;
-        chrome.storage.local.set({options});
+        options.speedPresets[name.charAt(name.length - 1)] = value;
+        saveOptions();
     });
 });
 
-skipForm.skipSeconds.addEventListener("input", e => {
-    const skipValue = parseFloat(e.target.value) ?? skip;
-    chrome.storage.local.set({skipValue});
+skipForm.skipSeconds.addEventListener("input", () => {
+    const seconds = parseFloat(skipForm.skipSeconds.value),
+          enabled = options.skipPresets.enabled;
+
+    if(!enabled || seconds == null || seconds == NaN) return;
+
+    options.skipPresets.seconds = seconds;
+
+    saveOptions();
 });
