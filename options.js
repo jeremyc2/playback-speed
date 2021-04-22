@@ -33,7 +33,7 @@ speedForm.querySelectorAll("input").forEach(input => {
 
         var value = parseFloat(input.value);
 
-        if(value == null || value == NaN) return;
+        if(value == NaN) return;
 
         if(value > 16) {
             alert("Values higher than 16 are not permitted");
@@ -52,7 +52,7 @@ skipForm.skipSeconds.addEventListener("input", () => {
     const seconds = parseFloat(skipForm.skipSeconds.value),
           enabled = options.skipPresets.enabled;
 
-    if(!enabled || seconds == null || seconds == NaN) return;
+    if(!enabled || seconds == NaN) return;
 
     options.skipPresets.seconds = seconds;
 
