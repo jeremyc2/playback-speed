@@ -1,14 +1,16 @@
 // TODO switch on and off controls
-const options = { ...defaultOpts };
+var options = getDefaults();
 
 // Initialize with the user's option settings
 chrome.storage.local.get('options', data => {
-    Object.assign(options, data.options);
+    if(data == null) return;
+    
+    options = data.options;
 });
 
 chrome.storage.onChanged.addListener(changes => {
     for ({ newValue: newOptions } of Object.values(changes)) {
-        Object.assign(options, newOptions);
+        options = newOptions;
     }
 });
 
@@ -26,7 +28,7 @@ window.addEventListener("keydown", e => {
     if(parseFloat(e.key) > 0) {
         e.stopPropagation();
         const video = document.querySelector("video"),
-              speed = options[e.key] ?? defaultOpts[e.key];
+              speed = options.speedPresets[e.key];
 
         try {
             video.playbackRate = speed;
