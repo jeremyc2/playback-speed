@@ -4,6 +4,10 @@
   "description": "Use number keys to change playback rate in video",
   "version": "1.0",
   "options_page": "options.html",
+  "background": {
+    "scripts": ["background.js"]
+  },
+  "browser_action": {},
   "content_scripts":[
       {
         "run_at": "document_start",

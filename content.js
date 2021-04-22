@@ -1,12 +1,6 @@
 // TODO switch on and off controls
 const options = { ...defaultOpts };
 
-var title;
-
-document.addEventListener("DOMContentLoaded", () => {
-    title = document.title;
-})
-
 // Initialize with the user's option settings
 chrome.storage.local.get('options', data => {
     Object.assign(options, data.options);
@@ -40,6 +34,6 @@ window.addEventListener("keydown", e => {
             console.error(error);
         }
         
-        document.title = `${speed}X ${title}`;
+        chrome.runtime.sendMessage({type: "playback-rate-change", speed: speed});
     }
 }, true);
