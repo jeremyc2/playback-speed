@@ -27,10 +27,25 @@ window.addEventListener("keydown", e => {
         return;
     }
 
+    const video = document.querySelector("video");
+
+    if(e.key == "ArrowRight") {
+        e.stopPropagation();
+        const seconds = options.skipPresets.seconds;
+        video.currentTime += seconds;
+        return;
+    }
+
+    if(e.key == "ArrowLeft") {
+        e.stopPropagation();
+        const seconds = options.skipPresets.seconds;
+        video.currentTime -= seconds;
+        return;
+    }
+
     if(parseFloat(e.key) > 0) {
         e.stopPropagation();
-        const video = document.querySelector("video"),
-              speed = options.speedPresets[e.key];
+        const speed = options.speedPresets[e.key];
 
         try {
             video.playbackRate = speed;
