@@ -4,7 +4,7 @@ var options = getDefaults();
 // Initialize with the user's option settings
 chrome.storage.local.get('options', data => {
     if(data == null) return;
-    
+
     options = data.options;
 });
 
