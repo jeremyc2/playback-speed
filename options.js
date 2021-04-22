@@ -18,9 +18,8 @@ chrome.storage.local.get('options', ({ options: opts }) => {
     if(opts == null) return;
 
     options = opts;
+    fillPageValues();
 });
-
-fillPageValues();
 
 resetButton.addEventListener("click", () => {
     options = getDefaults();
