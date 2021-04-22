@@ -24,6 +24,7 @@ chrome.storage.local.get('options', ({ options: opts }) => {
 resetButton.addEventListener("click", () => {
     options = getDefaults();
     fillPageValues();
+    saveOptions();
 });
 
 speedForm.querySelectorAll("input").forEach(input => {
