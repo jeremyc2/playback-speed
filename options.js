@@ -1,6 +1,8 @@
 // In-page cache of the user's options
 const options = { ...defaultOpts };
 
+var skip = defaultSkip;
+
 function reset() {
     container.querySelectorAll("input").forEach((input, i) => {
         Object.assign(options, defaultOpts);
@@ -15,6 +17,10 @@ chrome.storage.local.get('options', data => {
     for (let [key, value] of Object.entries(options)) {
         container[`speed${key}`].value = value;
     }
+});
+
+chrome.storage.local.get('skipValue', data => {
+    skip = data;
 });
 
 resetButton.addEventListener("click", () => {
@@ -40,4 +46,9 @@ container.querySelectorAll("input").forEach(input => {
         options[name.charAt(name.length - 1)] = value;
         chrome.storage.local.set({options});
     });
+});
+
+skipForm.skipSeconds.addEventListener("input", e => {
+    const skipValue = parseFloat(e.target.value) ?? skip;
+    chrome.storage.local.set({skipValue});
 });
