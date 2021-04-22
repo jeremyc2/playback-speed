@@ -15,11 +15,12 @@ function fillPageValues() {
 // Initialize with the user's option settings
 chrome.storage.local.get('options', data => {
 
-    if(data == null) return;
+    if(JSON.stringify(data) == "{}") return;
 
     options = data.options;
-    fillPageValues();
 });
+
+fillPageValues();
 
 resetButton.addEventListener("click", () => {
     options = getDefaults();

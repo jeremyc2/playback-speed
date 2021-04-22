@@ -1,10 +1,12 @@
 // TODO switch on and off controls
 var options = getDefaults();
+console.log(options);
 
 // Initialize with the user's option settings
 chrome.storage.local.get('options', data => {
-    if(data == null) return;
+    if(JSON.stringify(data) == "{}") return;
 
+    console.log(data);
     options = data.options;
 });
 
