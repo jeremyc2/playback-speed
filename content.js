@@ -2,10 +2,11 @@
 var options = getDefaults();
 
 // Initialize with the user's option settings
-chrome.storage.local.get('options', data => {
-    if(JSON.stringify(data) == "{}") return;
+chrome.storage.local.get('options', ({ options: opts }) => {
 
-    options = data.options;
+    if(opts == null) return;
+
+    options = opts;
 });
 
 chrome.storage.onChanged.addListener(changes => {
