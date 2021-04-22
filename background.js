@@ -1,9 +1,17 @@
+function setBadge(sender, value) {
+    chrome.browserAction.setBadgeText({tabId: sender.tab.id,text: value});
+}
+
 chrome.runtime.onMessage.addListener(
     function(request, sender) {
         if (request.type == "playback-rate-change") {
-            chrome.browserAction.setBadgeText({tabId: sender.tab.id,text: `${
-                request.speed.toString().substring(0, 4)
-            }X`});
+            const speed = request.speed;
+            if(speed == 1) {
+                setBadge(sender, '');
+                return;
+            }
+
+            setBadge(sender, `${speed.toString().substring(0, 4)}X`);
         }
     }
   );
