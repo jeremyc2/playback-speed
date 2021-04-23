@@ -10,6 +10,7 @@ function fillPageValues() {
         input.value = options.speedPresets[i + 1];
     });
     skipForm.skipSeconds.value = options.skipPresets.seconds;
+    skipForm.enableSkip.checked = options.skipPresets.enabled;
 }
 
 // Initialize with the user's option settings
@@ -49,6 +50,11 @@ speedForm.querySelectorAll("input").forEach(input => {
         options.speedPresets[name.charAt(name.length - 1)] = value;
         saveOptions();
     });
+});
+
+skipForm.enableSkip.addEventListener('change', function() {
+    options.skipPresets.enabled = this.checked;
+    saveOptions();
 });
 
 skipForm.skipSeconds.addEventListener("input", () => {
