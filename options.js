@@ -13,11 +13,14 @@ function fillPageValues() {
 }
 
 // Initialize with the user's option settings
-chrome.storage.local.get('options', ({ options: opts }) => {
+chrome.storage.local.get('options', res => {
 
-    if(opts == null) return;
+    if(res.options == null) {
+        fillPageValues();
+        return;
+    }
 
-    options = opts;
+    options = res.options;
     fillPageValues();
 });
 
