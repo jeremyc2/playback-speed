@@ -52,6 +52,12 @@
             font-size: 20px;
         }
 
+        #skipForm > div {
+            width: fit-content;
+            margin: 0 auto;
+            text-align: left;
+        }
+
         div[class*=box] {
             width: fit-content; 
             display: flex;
@@ -155,8 +161,14 @@
     <h1>Skip Preferences</h1>
     <form id="skipForm">
         <div>
-            <label for="skipSeconds">Skip Duration (in seconds)</label>
-            <input type="number" name="skipSeconds">
+            <div>
+                <input type="checkbox" name="enableSkip" style="width: unset; height: 1rem;">
+                <label for="enableSkip">Enable Skip</label>
+            </div>
+            <div>
+                <label for="skipSeconds">Skip Duration (in seconds)</label>
+                <input type="number" name="skipSeconds">
+            </div>
         </div>
     </form>
     <div class="box-3">
