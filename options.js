@@ -10,7 +10,9 @@ function fillPageValues() {
         input.value = options.speedPresets[i + 1];
     });
     skipForm.skipSeconds.value = options.skipPresets.seconds;
+
     skipForm.enableSkip.checked = options.skipPresets.enabled;
+    skipForm.skipSeconds.disabled = !options.skipPresets.enabled;
 }
 
 // Initialize with the user's option settings
@@ -54,6 +56,7 @@ speedForm.querySelectorAll("input").forEach(input => {
 
 skipForm.enableSkip.addEventListener('change', function() {
     options.skipPresets.enabled = this.checked;
+    skipForm.skipSeconds.disabled = !this.checked;
     saveOptions();
 });
 
