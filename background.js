@@ -1,3 +1,7 @@
+chrome.browserAction.onClicked.addListener(function(tab) {
+    chrome.tabs.create({'url': "/options.html" } );
+});
+
 function setBadge(sender, value) {
     chrome.browserAction.setBadgeText({tabId: sender.tab.id,text: value});
 }
