@@ -28,14 +28,14 @@ window.addEventListener("keydown", e => {
 
     const video = document.querySelector("video");
 
-    if(e.key == "ArrowRight") {
+    if(options.skipPresets.enabled && e.key == "ArrowRight") {
         e.stopPropagation();
         const seconds = options.skipPresets.seconds;
         video.currentTime += seconds;
         return;
     }
 
-    if(e.key == "ArrowLeft") {
+    if(options.skipPresets.enabled && e.key == "ArrowLeft") {
         e.stopPropagation();
         const seconds = options.skipPresets.seconds;
         video.currentTime -= seconds;
