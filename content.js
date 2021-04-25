@@ -26,30 +26,34 @@ window.addEventListener("keydown", e => {
         return;
     }
 
-    var video = document.querySelector("video");
-
-    if(options.skipPresets.enabled && e.key == "ArrowRight") {
+    if(options.skipPresets.enabled && e.key == "ArrowLeft") {
         e.stopPropagation();
-        const seconds = options.skipPresets.seconds;
-        video.currentTime += seconds;
+        skipBack();
         return;
     }
 
-    if(options.skipPresets.enabled && e.key == "ArrowLeft") {
+    if(options.skipPresets.enabled && e.key == "ArrowRight") {
         e.stopPropagation();
-        const seconds = options.skipPresets.seconds;
-        video.currentTime -= seconds;
+        skipForward()
         return;
     }
 
     e.stopPropagation();
     changeSpeed(parseFloat(e.key)); 
+    return
+
 }, true);
 
 chrome.runtime.onMessage.addListener(
     function(request) {
         if(request.type == "change-speed") {
             changeSpeed(request.speed);
+        } else if (request.type == "skip-back") {
+
+        } else if (request.type == "play-pause") {
+
+        } else if (request.type == "skip-forward") {
+
         }
     }
 );
@@ -68,4 +72,18 @@ function changeSpeed(speedIndex) {
         
         chrome.runtime.sendMessage({type: "playback-rate-change", speed: speed});
     }
+}
+
+function skipBack() {
+    var video = document.querySelector("video");
+
+    const seconds = options.skipPresets.seconds;
+    video.currentTime -= seconds;
+}
+
+function skipForward() {
+    var video = document.querySelector("video");
+
+    const seconds = options.skipPresets.seconds;
+    video.currentTime += seconds;
 }
