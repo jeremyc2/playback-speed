@@ -15,3 +15,7 @@ chrome.runtime.onMessage.addListener(
         }
     }
   );
+
+chrome.browserAction.onClicked.addListener(function() {
+    chrome.tabs.create({ url: "options.html" });
+});
