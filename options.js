@@ -33,10 +33,8 @@ resetButton.addEventListener("click", () => {
     saveOptions();
 });
 
-speedForm.querySelectorAll("input").forEach(input => {
+speedForm.querySelectorAll("input").forEach((input, i) => {
     input.addEventListener("input", () => {
-        const name = input.name;
-
         var value = parseFloat(input.value);
 
         if(value == NaN) return;
@@ -49,7 +47,7 @@ speedForm.querySelectorAll("input").forEach(input => {
             value = input.value = 1;
         }
         
-        options.speedPresets[name.charAt(name.length - 1)] = value;
+        options.speedPresets[i + 1] = value;
         saveOptions();
     });
 });

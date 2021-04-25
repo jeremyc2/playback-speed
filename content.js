@@ -48,7 +48,9 @@ window.addEventListener("keydown", e => {
 
 chrome.runtime.onMessage.addListener(
     function(request) {
-        changeSpeed(request);
+        if(request.type == "change-speed") {
+            changeSpeed(request.speed);
+        }
     }
 );
 
