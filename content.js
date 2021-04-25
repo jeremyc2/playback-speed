@@ -49,11 +49,11 @@ chrome.runtime.onMessage.addListener(
         if(request.type == "change-speed") {
             changeSpeed(request.speed);
         } else if (request.type == "skip-back") {
-
+            skipBack();
         } else if (request.type == "play-pause") {
 
         } else if (request.type == "skip-forward") {
-
+            skipForward();
         }
     }
 );
