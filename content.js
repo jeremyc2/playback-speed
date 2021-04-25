@@ -26,7 +26,7 @@ window.addEventListener("keydown", e => {
         return;
     }
 
-    const video = document.querySelector("video");
+    var video = document.querySelector("video");
 
     if(options.skipPresets.enabled && e.key == "ArrowRight") {
         e.stopPropagation();
@@ -42,9 +42,21 @@ window.addEventListener("keydown", e => {
         return;
     }
 
-    if(parseFloat(e.key) > 0) {
-        e.stopPropagation();
-        const speed = options.speedPresets[e.key];
+    e.stopPropagation();
+    changeSpeed(parseFloat(e.key)); 
+}, true);
+
+chrome.runtime.onMessage.addListener(
+    function(request) {
+        changeSpeed(request);
+    }
+);
+
+function changeSpeed(speedIndex) {
+    var video = document.querySelector("video");
+
+    if(speedIndex > 0) {
+        const speed = options.speedPresets[speedIndex];
 
         try {
             video.playbackRate = speed;
@@ -54,10 +66,4 @@ window.addEventListener("keydown", e => {
         
         chrome.runtime.sendMessage({type: "playback-rate-change", speed: speed});
     }
-}, true);
-
-chrome.runtime.onMessage.addListener(
-    function(request) {
-        console.log("DO ACTION: ", request);
-    }
-);
+}
