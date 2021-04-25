@@ -51,7 +51,7 @@ chrome.runtime.onMessage.addListener(
         } else if (request.type == "skip-back") {
             skipBack();
         } else if (request.type == "play-pause") {
-
+            togglePlayPause();
         } else if (request.type == "skip-forward") {
             skipForward();
         }
@@ -86,4 +86,14 @@ function skipForward() {
 
     const seconds = options.skipPresets.seconds;
     video.currentTime += seconds;
+}
+
+function togglePlayPause() {
+    var video = document.querySelector("video");
+
+    if(video.paused == true) {
+        video.play();
+    } else {
+        video.pause();
+    }
 }
