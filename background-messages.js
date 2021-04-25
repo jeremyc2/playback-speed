@@ -1,5 +1,4 @@
 window.addEventListener("message", (event) => {
-    console.log(event.data);
     changeSpeed(event.data);
 }, false);
 
