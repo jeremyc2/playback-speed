@@ -55,3 +55,9 @@ window.addEventListener("keydown", e => {
         chrome.runtime.sendMessage({type: "playback-rate-change", speed: speed});
     }
 }, true);
+
+chrome.runtime.onMessage.addListener(
+    function(request) {
+        console.log("DO ACTION: ", request);
+    }
+);
