@@ -26,25 +26,43 @@ window.addEventListener("keydown", e => {
         return;
     }
 
-    const video = document.querySelector("video");
+    if(options.skipPresets.enabled && e.key == "ArrowLeft") {
+        e.stopPropagation();
+        skipBack();
+        return;
+    }
 
     if(options.skipPresets.enabled && e.key == "ArrowRight") {
         e.stopPropagation();
-        const seconds = options.skipPresets.seconds;
-        video.currentTime += seconds;
+        skipForward()
         return;
     }
 
-    if(options.skipPresets.enabled && e.key == "ArrowLeft") {
-        e.stopPropagation();
-        const seconds = options.skipPresets.seconds;
-        video.currentTime -= seconds;
-        return;
-    }
+    e.stopPropagation();
+    changeSpeed(parseFloat(e.key)); 
+    return
 
-    if(parseFloat(e.key) > 0) {
-        e.stopPropagation();
-        const speed = options.speedPresets[e.key];
+}, true);
+
+chrome.runtime.onMessage.addListener(
+    function(request) {
+        if(request.type == "change-speed") {
+            changeSpeed(request.speed);
+        } else if (request.type == "skip-back") {
+            skipBack();
+        } else if (request.type == "play-pause") {
+            togglePlayPause();
+        } else if (request.type == "skip-forward") {
+            skipForward();
+        }
+    }
+);
+
+function changeSpeed(speedIndex) {
+    var video = document.querySelector("video");
+
+    if(speedIndex > 0) {
+        const speed = options.speedPresets[speedIndex];
 
         try {
             video.playbackRate = speed;
@@ -54,4 +72,28 @@ window.addEventListener("keydown", e => {
         
         chrome.runtime.sendMessage({type: "playback-rate-change", speed: speed});
     }
-}, true);
+}
+
+function skipBack() {
+    var video = document.querySelector("video");
+
+    const seconds = options.skipPresets.seconds;
+    video.currentTime -= seconds;
+}
+
+function skipForward() {
+    var video = document.querySelector("video");
+
+    const seconds = options.skipPresets.seconds;
+    video.currentTime += seconds;
+}
+
+function togglePlayPause() {
+    var video = document.querySelector("video");
+
+    if(video.paused == true) {
+        video.play();
+    } else {
+        video.pause();
+    }
+}
