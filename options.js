@@ -68,3 +68,5 @@ skipForm.skipSeconds.addEventListener("input", () => {
 
     saveOptions();
 });
+
+const qrcode = new QRCode("qrcode", `https://glacial-peak-93348.herokuapp.com/`);
