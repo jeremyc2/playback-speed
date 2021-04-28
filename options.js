@@ -70,4 +70,7 @@ skipForm.skipSeconds.addEventListener("input", () => {
 });
 
 // TODO Make and sync appID between load-frame.js in background.html
-const qrcode = new QRCode("qrcode", `https://glacial-peak-93348.herokuapp.com/?id=${appID}`);
+var qrcode;
+chrome.runtime.sendMessage({type: "get-id"}, response => {
+    qrcode = new QRCode("qrcode", `https://glacial-peak-93348.herokuapp.com/?id=${response}`);
+});
