@@ -38,7 +38,7 @@ window.addEventListener("keydown", e => {
         return;
     }
 
-    if(isNaN(parseInt(e.key))) {
+    if(!isNaN(parseInt(e.key))) {
         e.stopPropagation();
         changeSpeed(parseInt(e.key)); 
         return;
