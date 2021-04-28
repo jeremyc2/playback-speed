@@ -37,7 +37,7 @@ speedForm.querySelectorAll("input").forEach((input, i) => {
     input.addEventListener("input", () => {
         var value = parseFloat(input.value);
 
-        if(value == NaN) return;
+        if(isNaN(value)) return;
 
         if(value > 16) {
             alert("Values higher than 16 are not permitted");
@@ -62,15 +62,9 @@ skipForm.skipSeconds.addEventListener("input", () => {
     const seconds = parseFloat(skipForm.skipSeconds.value),
           enabled = options.skipPresets.enabled;
 
-    if(!enabled || seconds == NaN) return;
+    if(!enabled || isNaN(seconds)) return;
 
     options.skipPresets.seconds = seconds;
 
     saveOptions();
-});
-
-// TODO Make and sync appID between load-frame.js in background.html
-var qrcode;
-chrome.runtime.sendMessage({type: "get-id"}, response => {
-    qrcode = new QRCode("qrcode", `https://glacial-peak-93348.herokuapp.com/?id=${response}`);
 });

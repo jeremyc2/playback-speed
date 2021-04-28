@@ -1,0 +1,11 @@
+#qrcode {
+    height: 155px;
+    width: 155px;
+    margin: 10px;
+    display: inline-block;
+}
+
+#qrcode > :is(canvas, img) {
+    width: 100%;
+    height: 100%;
+}
