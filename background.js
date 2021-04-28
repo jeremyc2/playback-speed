@@ -7,7 +7,7 @@ function uuidv4() {
 const appID = uuidv4();
 
 chrome.browserAction.onClicked.addListener(function() {
-    chrome.tabs.create({'url': "/options.html" } );
+    chrome.tabs.create({'url': "/options.html"});
 });
 
 function setBadge(sender, value) {
