@@ -63,7 +63,7 @@ chrome.runtime.onMessage.addListener(
 function changeSpeed(speedIndex) {
     var video = document.querySelector("video");
 
-    if(speedIndex > 0 && speedIndex < 9) {
+    if(speedIndex > 0 && speedIndex < 10) {
         const speed = options.speedPresets[speedIndex];
 
         try {
