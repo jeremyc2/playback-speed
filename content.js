@@ -38,9 +38,11 @@ window.addEventListener("keydown", e => {
         return;
     }
 
-    e.stopPropagation();
-    changeSpeed(parseFloat(e.key)); 
-    return
+    if(parseInt(e.key) != NaN) {
+        e.stopPropagation();
+        changeSpeed(parseInt(e.key)); 
+        return;
+    }
 
 }, true);
 
@@ -61,7 +63,7 @@ chrome.runtime.onMessage.addListener(
 function changeSpeed(speedIndex) {
     var video = document.querySelector("video");
 
-    if(speedIndex > 0) {
+    if(speedIndex > 0 && speedIndex < 9) {
         const speed = options.speedPresets[speedIndex];
 
         try {
