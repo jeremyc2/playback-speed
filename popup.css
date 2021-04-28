@@ -1,3 +1,8 @@
+body {
+    margin: 0;
+    text-align: center;
+}
+
 #qrcode {
     height: 155px;
     width: 155px;

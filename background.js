@@ -6,10 +6,6 @@ function uuidv4() {
 
 const appID = uuidv4();
 
-chrome.browserAction.onClicked.addListener(function() {
-    chrome.tabs.create({'url': "/options.html"});
-});
-
 function setBadge(sender, value) {
     chrome.browserAction.setBadgeText({tabId: sender.tab.id,text: value});
 }
