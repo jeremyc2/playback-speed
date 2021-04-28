@@ -3,6 +3,9 @@
   "name": "Playback Speed",
   "description": "Use number keys to change playback rate in video",
   "version": "1.0",
+  "icons": { "16": "icon16.png",
+             "48": "icon48.png",
+             "128": "icon128.png" },
   "options_page": "options.html",
   "background": {
     "page": "background.html"
