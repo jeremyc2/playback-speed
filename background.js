@@ -4,30 +4,39 @@ function uuidv4() {
   );
 }
 
-var appID;
-chrome.storage.local.get('id', function(res) {
-    appID = res.id || uuidv4();
+var appID = new Promise((resolve, reject) => {
+    try {
+        chrome.storage.local.get('id', function(res) {
+            var id = res.id || uuidv4();
+            chrome.storage.local.set({id});
+            resolve(id);
+        });
+    } catch (ex) {
+        reject(ex);
+    }
 });
 
 function setBadge(sender, value) {
     chrome.browserAction.setBadgeText({tabId: sender.tab.id,text: value});
 }
 
-chrome.runtime.onMessage.addListener(
-    function(request, sender, sendResponse) {
-        if (request.type == "playback-rate-change") {
-            const speed = request.speed;
-            if(speed == 1) {
-                setBadge(sender, '');
+appID.then(id => {
+    chrome.runtime.onMessage.addListener(
+        function(request, sender, sendResponse) {
+            if (request.type == "playback-rate-change") {
+                const speed = request.speed;
+                if(speed == 1) {
+                    setBadge(sender, '');
+                    return;
+                }
+    
+                setBadge(sender, `${speed.toString().substring(0, 4)}X`);
                 return;
             }
-
-            setBadge(sender, `${speed.toString().substring(0, 4)}X`);
-            return;
+            if (request.type == "get-id") {
+                sendResponse(id);
+                return true;
+            }
         }
-        if (request.type == "get-id") {
-            sendResponse(appID);
-            return true;
-        }
-    }
-  );
+    );
+});
