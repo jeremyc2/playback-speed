@@ -93,9 +93,14 @@ function skipForward() {
 function togglePlayPause() {
     var video = document.querySelector("video");
 
-    if(video.paused == true) {
-        video.play();
-    } else {
-        video.pause();
-    }
+    video.focus();
+
+    var e = new KeyboardEvent('keydown',{'keyCode':32,'which':32});
+    document.dispatchEvent(e);
+    
+    // if(video.paused == true) {
+    //     video.play();
+    // } else {
+    //     video.pause();
+    // }
 }
