@@ -41,12 +41,7 @@ chrome.runtime.onMessage.addListener(
             return;
         }
         if (request.type == "get-id") {
-            getID().then(id => {
-                sendResponse(id);
-            }).catch(ex => {
-                console.error(ex);
-                sendResponse(undefined);
-            });
+            sendResponse(getID());
             return;
         }
     }
