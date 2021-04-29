@@ -4,7 +4,25 @@ function uuidv4() {
   );
 }
 
-const appID = uuidv4();
+async function getID() {
+    return new Promise((resolve, reject) => {
+        try {
+            chrome.storage.local.get('id', function(res) {
+                if(typeof res.id === undefined) {
+                    var id = uuidv4();
+                    chrome.storage.local.set({id});
+                    resolve(id);
+                    return;
+                }
+
+                resolve(res.id);
+                return;
+            });
+        } catch (ex) {
+            reject(ex);
+        }
+    });
+}
 
 function setBadge(sender, value) {
     chrome.browserAction.setBadgeText({tabId: sender.tab.id,text: value});
@@ -23,7 +41,12 @@ chrome.runtime.onMessage.addListener(
             return;
         }
         if (request.type == "get-id") {
-            sendResponse(appID);
+            getID().then(id => {
+                sendResponse(id);
+            }).catch(ex => {
+                console.error(ex);
+                sendResponse(undefined);
+            });
             return;
         }
     }
