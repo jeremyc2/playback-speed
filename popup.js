@@ -1,14 +1,12 @@
 var qrcode;
 document.addEventListener("DOMContentLoaded", () => {
-    chrome.runtime.sendMessage({type: "get-id"}, response => {
-        console.log(JSON.stringify(response));
+    chrome.runtime.sendMessage({type: "get-id"}, appID => {
         var url;
-        response.then(id => {
-            url = `https://glacial-peak-93348.herokuapp.com/?id=${id}`;
-        }).catch(ex => {
-            console.error(ex);
+        if(appID == null) {
             url = 'https://glacial-peak-93348.herokuapp.com';
-        });
+        } else {
+            url = `https://glacial-peak-93348.herokuapp.com/?id=${appID}`;
+        }
 
         qrcode = new QRCode("qrcode", url);
     });
