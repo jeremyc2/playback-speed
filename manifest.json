@@ -3,15 +3,15 @@
   "name": "Playback Speed",
   "description": "Use number keys to change playback rate in video",
   "version": "1.0",
-  "icons": { "16": "icon16.png",
-             "48": "icon48.png",
-             "128": "icon128.png" },
-  "options_page": "options.html",
+  "icons": { "16": "icons/icon16.png",
+             "48": "icons/icon48.png",
+             "128": "icons/icon128.png" },
+  "options_page": "pages/options.html",
   "background": {
-    "page": "background.html"
+    "page": "pages/background.html"
   },
   "browser_action": {
-    "default_popup": "popup.html"
+    "default_popup": "pages/popup.html"
   },
   "content_scripts":[
       {
@@ -23,7 +23,7 @@
           "https://www.linkedin.com/*",
           "https://www.disneyplus.com/*"
         ],
-        "js": ["defaults.js", "content.js"]
+        "js": ["javascript/defaults.js", "javascript/content.js"]
       }
     ],
   "permissions": [
