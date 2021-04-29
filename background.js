@@ -42,7 +42,7 @@ chrome.runtime.onMessage.addListener(
         }
         if (request.type == "get-id") {
             sendResponse(getID());
-            return;
+            return true;
         }
     }
   );
