@@ -96,6 +96,7 @@ function togglePlayPause() {
     // Special thing for Hulu
     if(document.location.href.indexOf("hulu") != -1) {
         var actualCode = `
+        var video = document.querySelector('video');
         if(video.__HuluDashPlayer__._paused) {
             video.__HuluDashPlayer__.play();
         } else {
