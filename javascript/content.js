@@ -1,4 +1,3 @@
-// TODO switch on and off controls
 var options = getDefaults();
 
 // Initialize with the user's option settings
