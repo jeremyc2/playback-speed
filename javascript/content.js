@@ -1,5 +1,12 @@
 var options = getDefaults();
 
+function injectCode(actualCode) {
+    var script = document.createElement('script');
+    script.textContent = actualCode;
+    document.head.appendChild(script);
+    script.remove();
+}
+
 // Initialize with the user's option settings
 chrome.storage.local.get('options', res => {
 
@@ -76,23 +83,42 @@ function changeSpeed(speedIndex) {
 }
 
 function skipBack() {
-    var video = document.querySelector("video");
-
     const seconds = options.skipPresets.seconds;
-    video.currentTime -= seconds;
+    if (document.location.href.indexOf("netflix") != -1) {
+        var actualCode = `
+        var videoPlayer = netflix.appContext.state.playerApp.getAPI().videoPlayer,
+            player = videoPlayer.getVideoPlayerBySessionId(videoPlayer.getAllPlayerSessionIds()[0]),
+            time = player.getCurrentTime();
+        player.seek(time - ${seconds * 1000});`
+
+        injectCode(actualCode);
+    } else {
+        var video = document.querySelector("video");
+
+        video.currentTime -= seconds;
+    }
 }
 
 function skipForward() {
-    var video = document.querySelector("video");
-
     const seconds = options.skipPresets.seconds;
-    video.currentTime += seconds;
+    if (document.location.href.indexOf("netflix") != -1) {
+        var actualCode = `
+        var videoPlayer = netflix.appContext.state.playerApp.getAPI().videoPlayer,
+            player = videoPlayer.getVideoPlayerBySessionId(videoPlayer.getAllPlayerSessionIds()[0]),
+            time = player.getCurrentTime();
+        player.seek(time + ${seconds * 1000});`
+
+        injectCode(actualCode);
+    } else {
+        var video = document.querySelector("video");
+
+        video.currentTime += seconds;
+    }
 }
 
 function togglePlayPause() {
     var video = document.querySelector("video");
 
-    // Special thing for Hulu
     if(document.location.href.indexOf("hulu") != -1) {
         var actualCode = `
         var video = document.querySelector('video');
@@ -102,10 +128,19 @@ function togglePlayPause() {
             video.__HuluDashPlayer__.pause();
         }`;
         
-        var script = document.createElement('script');
-        script.textContent = actualCode;
-        document.head.appendChild(script);
-        script.remove();
+        injectCode(actualCode);
+    } else if (document.location.href.indexOf("netflix") != -1) {
+        var actualCode = `
+        var videoPlayer = netflix.appContext.state.playerApp.getAPI().videoPlayer,
+            player = videoPlayer.getVideoPlayerBySessionId(videoPlayer.getAllPlayerSessionIds()[0]);
+            
+        if(player.isPaused()) {
+            player.play();
+        } else {
+            player.pause();
+        }`;
+        
+        injectCode(actualCode);
     } else {
         video.focus();
         var e = new KeyboardEvent('keydown',{'keyCode':32,'which':32});
