@@ -82,6 +82,7 @@ function changeSpeed(speedIndex) {
     }
 }
 
+// TODO Disney Plus skip back and forward
 function skipBack() {
     const seconds = options.skipPresets.seconds;
     if (document.location.href.indexOf("netflix") != -1) {
@@ -141,7 +142,13 @@ function togglePlayPause() {
         }`;
         
         injectCode(actualCode);
-    } else {
+    } else if (document.location.href.indexOf("disney") != -1) {
+        if(video.paused) {
+            video.play();
+        } else {
+            video.pause();
+        }
+    }else {
         video.focus();
         var e = new KeyboardEvent('keydown',{'keyCode':32,'which':32});
         document.dispatchEvent(e);
