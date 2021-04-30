@@ -93,14 +93,16 @@ function skipForward() {
 function togglePlayPause() {
     var video = document.querySelector("video");
 
-    video.focus();
-
-    var e = new KeyboardEvent('keydown',{'keyCode':32,'which':32});
-    document.dispatchEvent(e);
-    
-    // if(video.paused == true) {
-    //     video.play();
-    // } else {
-    //     video.pause();
-    // }
+    // Special thing for Hulu
+    if(video.__HuluDashPlayer__ != null) {
+        if(video.__HuluDashPlayer__._paused) {
+            video.__HuluDashPlayer__.play();
+        } else {
+            video.__HuluDashPlayer__.pause();
+        }
+    } else {
+        video.focus();
+        var e = new KeyboardEvent('keydown',{'keyCode':32,'which':32});
+        document.dispatchEvent(e);
+    }
 }
