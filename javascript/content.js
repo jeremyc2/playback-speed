@@ -82,7 +82,6 @@ function changeSpeed(speedIndex) {
     }
 }
 
-// TODO Disney Plus skip back and forward
 function skipBack() {
     const seconds = options.skipPresets.seconds;
     if (document.location.href.indexOf("netflix") != -1) {
@@ -93,6 +92,8 @@ function skipBack() {
         player.seek(time - ${seconds * 1000});`
 
         injectCode(actualCode);
+    } else if (document.location.href.indexOf("disney") != -1) {
+        // TODO Fix Disney Plus skip
     } else {
         var video = document.querySelector("video");
 
@@ -110,6 +111,8 @@ function skipForward() {
         player.seek(time + ${seconds * 1000});`
 
         injectCode(actualCode);
+    } else if (document.location.href.indexOf("disney") != -1) {
+        // TODO Fix Disney Plus skip
     } else {
         var video = document.querySelector("video");
 
