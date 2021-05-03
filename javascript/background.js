@@ -20,6 +20,8 @@ function setBadge(sender, value) {
     chrome.browserAction.setBadgeText({tabId: sender.tab.id,text: value});
 }
 
+appID.then(id => console.log(id));
+
 appID.then(id => {
     chrome.runtime.onMessage.addListener(
         function(request, sender, sendResponse) {
